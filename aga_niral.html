@@ -413,13 +413,27 @@
       <div class="form-row-inline">
         <div class="form-row">
           <label>Quantity</label>
-          <input type="text" id="taskQtyShopping" placeholder="e.g. 2 lbs" autocomplete="off"/>
+          <input type="text" id="taskQtyShopping" placeholder="e.g. 2" autocomplete="off"/>
         </div>
         <div class="form-row">
-          <label>Where to buy</label>
-          <input type="text" id="taskStore" placeholder="e.g. Whole Foods" autocomplete="off" list="storesList"/>
-          <datalist id="storesList"></datalist>
+          <label>Unit</label>
+          <select id="taskUnit">
+            <option value="pieces">Pieces</option>
+            <option value="lb">lb</option>
+            <option value="oz">oz</option>
+            <option value="kg">kg</option>
+            <option value="custom">Custom...</option>
+          </select>
         </div>
+      </div>
+      <div class="form-row conditional" id="customUnitField">
+        <label>Custom Unit</label>
+        <input type="text" id="taskCustomUnit" placeholder="e.g. bunches, cans..." autocomplete="off"/>
+      </div>
+      <div class="form-row">
+        <label>Where to buy</label>
+        <input type="text" id="taskStore" placeholder="e.g. Whole Foods" autocomplete="off" list="storesList"/>
+        <datalist id="storesList"></datalist>
       </div>
       <div class="toggle-row">
         <span class="toggle-label"><span class="toggle-icon">🌱</span> Organic</span>
@@ -492,6 +506,8 @@ const taskDate    = document.getElementById("taskDate");
 const taskDesc    = document.getElementById("taskDesc");
 const farmNote    = document.getElementById("farmNote");
 const organicTog  = document.getElementById("organicToggle");
+const taskUnit    = document.getElementById("taskUnit");
+const taskCustomUnit = document.getElementById("taskCustomUnit");
 const modalTitle  = document.getElementById("modalTitle");
 const storesList  = document.getElementById("storesList");
 const syncStatus  = document.getElementById("syncStatus");
@@ -508,8 +524,15 @@ function updateConditional() {
   document.getElementById("farmFields").classList.toggle("visible", cat === "farm");
   document.getElementById("locationField").classList.toggle("visible", cat === "todo" || cat === "farm");
   document.getElementById("descField").style.display = cat === "farm" ? "none" : "block";
+  
+  // Show custom unit field only when 'custom' is selected
+  if (cat === "shopping") {
+    const showCustom = taskUnit.value === "custom";
+    document.getElementById("customUnitField").classList.toggle("visible", showCustom);
+  }
 }
 taskCat.addEventListener("change", updateConditional);
+taskUnit.addEventListener("change", updateConditional);
 
 document.getElementById("openModal").addEventListener("click", () => openModal(null));
 document.getElementById("closeModal").addEventListener("click", closeModal);
@@ -530,6 +553,8 @@ function openModal(task) {
   organicTog.classList.toggle("on", task ? !!task.organic : false);
   document.getElementById("taskQtyShopping").value = task ? (task.qty || "") : "";
   document.getElementById("taskQtyFarm").value     = task ? (task.qty || "") : "";
+  taskUnit.value = task ? (task.unit || "pieces") : "pieces";
+  taskCustomUnit.value = task ? (task.customUnit || "") : "";
 
   updateConditional();
   modalOver.classList.add("open");
@@ -548,6 +573,8 @@ document.getElementById("saveTask").addEventListener("click", async () => {
 
   const cat     = taskCat.value;
   const qty     = cat === "shopping" ? document.getElementById("taskQtyShopping").value.trim() : (cat === "farm" ? document.getElementById("taskQtyFarm").value.trim() : "");
+  const unit    = cat === "shopping" ? taskUnit.value : "";
+  const customUnit = (cat === "shopping" && unit === "custom") ? taskCustomUnit.value.trim() : "";
   
   const payload = {
     id       : editId || Date.now().toString(36) + Math.random().toString(36).slice(2),
@@ -557,6 +584,8 @@ document.getElementById("saveTask").addEventListener("click", async () => {
     location : (cat === "todo" || cat === "farm") ? taskLocation.value : "",
     store    : cat === "shopping" ? taskStore.value.trim() : "",
     qty      : qty,
+    unit     : unit,
+    customUnit: customUnit,
     organic  : cat === "shopping" ? organicTog.classList.contains("on") : false,
     date     : taskDate.value,
     desc     : cat !== "farm" ? taskDesc.value.trim() : "",
@@ -647,7 +676,11 @@ function cardHTML(t) {
   }
   
   if (t.store)   badges += `<span class="badge badge-store">📍 ${t.store}</span>`;
-  if (t.qty)     badges += `<span class="badge badge-cat">📦 ${t.qty}</span>`;
+  if (t.qty) {
+    const displayUnit = t.unit === "custom" ? t.customUnit : t.unit;
+    const qtyText = displayUnit ? `${t.qty} ${displayUnit}` : t.qty;
+    badges += `<span class="badge badge-cat">📦 ${qtyText}</span>`;
+  }
   if (t.organic) badges += `<span class="badge badge-organic">🌱 Organic</span>`;
   if (t.category === "farm") badges += `<span class="badge badge-farm">🏡 Sapling</span>`;
   if (dateStr)   badges += `<span class="badge badge-date">📅 ${dateStr}</span>`;
