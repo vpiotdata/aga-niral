@@ -515,8 +515,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // ⚠️ CONFIGURATION - REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT DEPLOYMENT URL
 // ═══════════════════════════════════════════════════════════════════════════
-const SCRIPT_URL_RAW = "https://script.google.com/macros/s/AKfycbzrfaEOxLsVJw2uJRQglyvq52tQMkvIa1ofZAmbKhTt6AHZ2h3CqhZQ1_wkhCb0lX7rMg/exec";
-const SCRIPT_URL = SCRIPT_URL_RAW; // Direct call - will be wrapped in proxy calls below
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrfaEOxLsVJw2uJRQglyvq52tQMkvIa1ofZAmbKhTt6AHZ2h3CqhZQ1_wkhCb0lX7rMg/exec";
 // ═══════════════════════════════════════════════════════════════════════════
 
 const FAMILY_MEMBERS = ["Velu", "Selvi", "Devika", "Krisshi"];
@@ -634,9 +633,7 @@ async function loadTasks() {
   setSyncStatus("syncing");
   showLoading(true);
   try {
-    // Use allorigins CORS proxy
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(SCRIPT_URL + '?action=getTasks')}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(`${SCRIPT_URL}?action=getTasks`, {
       method: 'GET'
     });
     
@@ -658,11 +655,9 @@ async function loadTasks() {
 async function saveTask(task) {
   setSyncStatus("syncing");
   try {
-    // Use allorigins CORS proxy for POST
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(SCRIPT_URL)}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'saveTask', task })
     });
     
@@ -681,10 +676,9 @@ async function deleteTaskRemote(id) {
   setSyncStatus("syncing");
   showLoading(true);
   try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(SCRIPT_URL)}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'deleteTask', id })
     });
     
@@ -707,10 +701,9 @@ async function clearCompleted() {
   setSyncStatus("syncing");
   showLoading(true);
   try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(SCRIPT_URL)}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'clearCompleted' })
     });
     
@@ -731,10 +724,9 @@ async function archiveOld() {
   setSyncStatus("syncing");
   showLoading(true);
   try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(SCRIPT_URL)}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'archiveOld' })
     });
     
