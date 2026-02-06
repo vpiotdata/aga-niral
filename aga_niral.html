@@ -37,7 +37,6 @@
     padding: 0;
   }
 
-  /* ── Header ── */
   .header {
     background: linear-gradient(135deg, #3a3530 0%, #5a504a 100%);
     color: #fff;
@@ -85,10 +84,8 @@
     align-items: center;
     gap: 4px;
   }
-  .sync-status.syncing { color: var(--amber); }
-  .sync-status.error { color: var(--red); }
+  .sync-status.synced { color: #4ade80; }
 
-  /* ── Filter Tabs ── */
   .tabs {
     display: flex;
     gap: 6px;
@@ -112,10 +109,8 @@
   .tab.active, .tab:hover { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.4); }
   .tab.active { background: var(--amber); border-color: var(--amber); color: #fff; }
 
-  /* ── Main ── */
   .main { padding: 16px; max-width: 680px; margin: 0 auto; }
 
-  /* ── Add Button ── */
   .add-btn {
     width: 100%;
     padding: 14px;
@@ -137,7 +132,6 @@
   .add-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
   .add-btn .plus { font-size: 1.3rem; }
 
-  /* ── Modal ── */
   .modal-overlay {
     display: none;
     position: fixed; inset: 0;
@@ -161,7 +155,6 @@
   .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 18px; }
   .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 16px; color: var(--text); }
 
-  /* ── Form ── */
   .form-row { margin-bottom: 12px; }
   .form-row label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-light); margin-bottom: 5px; }
   .form-row input, .form-row select, .form-row textarea {
@@ -183,7 +176,6 @@
   .form-row-inline { display: flex; gap: 10px; }
   .form-row-inline .form-row { flex: 1; }
 
-  /* Toggle row */
   .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
   .toggle-label { font-size: 0.88rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
   .toggle-label .toggle-icon { font-size: 1.1rem; }
@@ -210,12 +202,10 @@
   }
   .toggle.on::after { left: 22px; }
 
-  /* Conditional fields */
   .conditional { display: none; }
   .conditional.visible { display: block; animation: fadeIn 0.2s ease; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  /* Buttons */
   .btn-row { display: flex; gap: 10px; margin-top: 18px; }
   .btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.18s; }
   .btn-primary { background: var(--green); color: #fff; }
@@ -223,7 +213,6 @@
   .btn-secondary { background: var(--bg); color: var(--text-light); }
   .btn-secondary:hover { background: var(--border); }
 
-  /* ── Task Cards ── */
   .section-title {
     font-size: 0.73rem;
     text-transform: uppercase;
@@ -252,7 +241,6 @@
   .task-card.done { opacity: 0.52; }
   .task-card.done .task-title { text-decoration: line-through; color: var(--text-light); }
 
-  /* Left accent bar by category */
   .task-card::before {
     content: '';
     position: absolute;
@@ -268,7 +256,6 @@
   .task-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .task-desc { font-size: 0.8rem; color: var(--text-light); margin-top: 2px; }
 
-  /* Checkbox */
   .task-check {
     width: 24px; height: 24px;
     border-radius: 7px;
@@ -283,7 +270,6 @@
   .task-check.checked { background: var(--green); border-color: var(--green); }
   .task-check.checked::after { content: '✓'; color: #fff; font-size: 0.85rem; font-weight: 700; }
 
-  /* Badges row */
   .badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
   .badge {
     display: inline-flex; align-items: center; gap: 4px;
@@ -299,7 +285,6 @@
   .badge-date { background: #f0eae3; color: var(--text-light); }
   .badge-cat { background: #f2f0ec; color: var(--text-light); }
 
-  /* Delete button */
   .task-delete {
     position: absolute;
     top: 10px; right: 10px;
@@ -314,7 +299,6 @@
   .task-card:hover .task-delete { display: block; }
   .task-card:hover .task-delete:hover { color: var(--red); }
 
-  /* Status toggle on card */
   .status-btn {
     font-size: 0.72rem;
     font-weight: 600;
@@ -330,7 +314,6 @@
   }
   .status-btn:hover { color: var(--blue); }
 
-  /* ── Empty State ── */
   .empty-state {
     text-align: center;
     padding: 48px 20px;
@@ -339,29 +322,6 @@
   .empty-state .icon { font-size: 2.4rem; margin-bottom: 10px; }
   .empty-state p { font-size: 0.88rem; }
 
-  /* ── Loading ── */
-  .loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(244,241,235,0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 300;
-    display: none;
-  }
-  .loading-overlay.show { display: flex; }
-  .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--border);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── Toast ── */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
     background: var(--text);
@@ -376,7 +336,6 @@
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* ── Responsive ── */
   @media (max-width: 520px) {
     .main { padding: 12px; }
     .modal { border-radius: 20px 20px 0 0; padding: 18px 16px 32px; }
@@ -386,19 +345,13 @@
 </head>
 <body>
 
-<!-- Loading overlay -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
-</div>
-
-<!-- Header -->
 <div class="header">
   <div class="header-top">
     <h1>🏡 <span>அகநிரல்</span> Aga-Niral</h1>
     <div class="header-actions">
-      <button class="header-btn" id="archiveBtn" title="Archive completed tasks older than 30 days">📦 Archive</button>
-      <button class="header-btn" id="clearBtn" title="Delete all completed tasks">🗑️ Clear Done</button>
-      <div class="sync-status" id="syncStatus">●</div>
+      <button class="header-btn" id="archiveBtn">📦 Archive</button>
+      <button class="header-btn" id="clearBtn">🗑️ Clear Done</button>
+      <div class="sync-status synced" id="syncStatus">● live</div>
     </div>
   </div>
   <div class="tabs" id="tabs">
@@ -415,13 +368,11 @@
   </div>
 </div>
 
-<!-- Main -->
 <div class="main">
   <button class="add-btn" id="openModal"><span class="plus">+</span> Add Task or Item</button>
   <div id="taskList"></div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -458,7 +409,6 @@
       </select>
     </div>
 
-    <!-- Shopping extras (shown when shopping selected) -->
     <div class="conditional" id="shoppingFields">
       <div class="form-row-inline">
         <div class="form-row">
@@ -477,7 +427,6 @@
       </div>
     </div>
 
-    <!-- Farm extras -->
     <div class="conditional" id="farmFields">
       <div class="form-row">
         <label>Quantity</label>
@@ -489,13 +438,11 @@
       </div>
     </div>
 
-    <!-- Due date for all tasks -->
     <div class="form-row">
       <label>Due by (optional)</label>
       <input type="date" id="taskDate"/>
     </div>
 
-    <!-- General description -->
     <div class="form-row" id="descField">
       <label>Notes</label>
       <textarea id="taskDesc" placeholder="Any extra details…"></textarea>
@@ -508,25 +455,32 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
-// ⚠️ CONFIGURATION - REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT DEPLOYMENT URL
+// Firebase Configuration
 // ═══════════════════════════════════════════════════════════════════════════
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrfaEOxLsVJw2uJRQglyvq52tQMkvIa1ofZAmbKhTt6AHZ2h3CqhZQ1_wkhCb0lX7rMg/exec";
+const firebaseConfig = {
+  databaseURL: "https://aga-niral-default-rtdb.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const tasksRef = db.ref('tasks');
+
 // ═══════════════════════════════════════════════════════════════════════════
 
 const FAMILY_MEMBERS = ["Velu", "Selvi", "Devika", "Krisshi"];
 
-// ── State ──
 let tasks  = [];
 let filter = "all";
 let editId = null;
-let isSyncing = false;
 
-// ── DOM refs ──
 const taskList    = document.getElementById("taskList");
 const modalOver   = document.getElementById("modalOverlay");
 const taskName    = document.getElementById("taskName");
@@ -541,16 +495,13 @@ const organicTog  = document.getElementById("organicToggle");
 const modalTitle  = document.getElementById("modalTitle");
 const storesList  = document.getElementById("storesList");
 const syncStatus  = document.getElementById("syncStatus");
-const loadingOverlay = document.getElementById("loadingOverlay");
 
-// ── Populate person select ──
 FAMILY_MEMBERS.forEach(n => {
   const o = document.createElement("option");
   o.value = n; o.textContent = n;
   taskPerson.appendChild(o);
 });
 
-// ── Conditional fields logic ──
 function updateConditional() {
   const cat = taskCat.value;
   document.getElementById("shoppingFields").classList.toggle("visible", cat === "shopping");
@@ -560,7 +511,6 @@ function updateConditional() {
 }
 taskCat.addEventListener("change", updateConditional);
 
-// ── Modal open / close ──
 document.getElementById("openModal").addEventListener("click", () => openModal(null));
 document.getElementById("closeModal").addEventListener("click", closeModal);
 modalOver.addEventListener("click", e => { if (e.target === modalOver) closeModal(); });
@@ -578,8 +528,8 @@ function openModal(task) {
   taskDesc.value   = task ? (task.desc || "") : "";
   farmNote.value   = task ? (task.farmNote || "") : "";
   organicTog.classList.toggle("on", task ? !!task.organic : false);
-  taskQtyShopping.value = task ? (task.qty || "") : "";
-  taskQtyFarm.value     = task ? (task.qty || "") : "";
+  document.getElementById("taskQtyShopping").value = task ? (task.qty || "") : "";
+  document.getElementById("taskQtyFarm").value     = task ? (task.qty || "") : "";
 
   updateConditional();
   modalOver.classList.add("open");
@@ -591,14 +541,14 @@ function closeModal() {
   editId = null;
 }
 
-// ── Save ──
 document.getElementById("saveTask").addEventListener("click", async () => {
   const name = taskName.value.trim();
   if (!name) { taskName.style.borderColor = "var(--red)"; taskName.focus(); return; }
   taskName.style.borderColor = "";
 
   const cat     = taskCat.value;
-  const qty     = cat === "shopping" ? taskQtyShopping.value.trim() : (cat === "farm" ? taskQtyFarm.value.trim() : "");
+  const qty     = cat === "shopping" ? document.getElementById("taskQtyShopping").value.trim() : (cat === "farm" ? document.getElementById("taskQtyFarm").value.trim() : "");
+  
   const payload = {
     id       : editId || Date.now().toString(36) + Math.random().toString(36).slice(2),
     name,
@@ -615,158 +565,25 @@ document.getElementById("saveTask").addEventListener("click", async () => {
     createdAt: editId ? (tasks.find(t => t.id === editId) || {}).createdAt || Date.now() : Date.now()
   };
 
-  showLoading(true);
-  const success = await saveTask(payload);
-  showLoading(false);
-
-  if (success) {
+  try {
+    await tasksRef.child(payload.id).set(payload);
     closeModal();
     showToast(editId ? "Task updated" : "Task added ✓");
-    await loadTasks();
-  } else {
-    showToast("⚠️ Save failed - check connection");
+  } catch (err) {
+    console.error("Save error:", err);
+    showToast("⚠️ Save failed");
   }
 });
 
-// ── Google Sheets API ──
-async function loadTasks() {
-  setSyncStatus("syncing");
-  showLoading(true);
-  try {
-    const response = await fetch(`${SCRIPT_URL}?action=getTasks`, {
-      method: 'GET'
-    });
-    
-    if (!response.ok) throw new Error("Failed to load");
-    
-    const data = await response.json();
-    tasks = data.tasks || [];
-    render();
-    setSyncStatus("synced");
-  } catch (err) {
-    console.error("Load error:", err);
-    setSyncStatus("error");
-    showToast("⚠️ Failed to load tasks");
-  } finally {
-    showLoading(false);
-  }
-}
+// Real-time listener
+tasksRef.on('value', (snapshot) => {
+  tasks = [];
+  snapshot.forEach((child) => {
+    tasks.push(child.val());
+  });
+  render();
+});
 
-async function saveTask(task) {
-  setSyncStatus("syncing");
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'saveTask', task })
-    });
-    
-    if (!response.ok) throw new Error("Save failed");
-    
-    setSyncStatus("synced");
-    return true;
-  } catch (err) {
-    console.error("Save error:", err);
-    setSyncStatus("error");
-    return false;
-  }
-}
-
-async function deleteTaskRemote(id) {
-  setSyncStatus("syncing");
-  showLoading(true);
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'deleteTask', id })
-    });
-    
-    if (!response.ok) throw new Error("Delete failed");
-    
-    await loadTasks();
-    setSyncStatus("synced");
-    return true;
-  } catch (err) {
-    console.error("Delete error:", err);
-    setSyncStatus("error");
-    showLoading(false);
-    return false;
-  }
-}
-
-async function clearCompleted() {
-  if (!confirm("Delete all completed tasks?\n\nThis cannot be undone.")) return;
-  
-  setSyncStatus("syncing");
-  showLoading(true);
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'clearCompleted' })
-    });
-    
-    if (!response.ok) throw new Error("Clear failed");
-    
-    await loadTasks();
-    showToast("✓ Completed tasks cleared");
-    setSyncStatus("synced");
-  } catch (err) {
-    console.error("Clear error:", err);
-    setSyncStatus("error");
-    showToast("⚠️ Clear failed");
-    showLoading(false);
-  }
-}
-
-async function archiveOld() {
-  setSyncStatus("syncing");
-  showLoading(true);
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'archiveOld' })
-    });
-    
-    if (!response.ok) throw new Error("Archive failed");
-    
-    const data = await response.json();
-    await loadTasks();
-    showToast(`✓ Archived ${data.count || 0} old tasks`);
-    setSyncStatus("synced");
-  } catch (err) {
-    console.error("Archive error:", err);
-    setSyncStatus("error");
-    showToast("⚠️ Archive failed");
-    showLoading(false);
-  }
-}
-
-// ── Archive & Clear buttons ──
-document.getElementById("clearBtn").addEventListener("click", clearCompleted);
-document.getElementById("archiveBtn").addEventListener("click", archiveOld);
-
-// ── UI helpers ──
-function setSyncStatus(status) {
-  syncStatus.className = "sync-status";
-  if (status === "syncing") {
-    syncStatus.classList.add("syncing");
-    syncStatus.textContent = "● syncing...";
-  } else if (status === "error") {
-    syncStatus.classList.add("error");
-    syncStatus.textContent = "● error";
-  } else {
-    syncStatus.textContent = "● synced";
-  }
-}
-
-function showLoading(show) {
-  loadingOverlay.classList.toggle("show", show);
-}
-
-// ── Filter tabs ──
 document.getElementById("tabs").addEventListener("click", e => {
   const tab = e.target.closest(".tab");
   if (!tab) return;
@@ -776,9 +593,7 @@ document.getElementById("tabs").addEventListener("click", e => {
   render();
 });
 
-// ── Render ──
 function render() {
-  // Build unique store suggestions
   const stores = [...new Set(tasks.map(t => t.store).filter(Boolean))];
   storesList.innerHTML = stores.map(s => `<option value="${s}">`).join("");
 
@@ -793,7 +608,6 @@ function render() {
     visible = tasks.filter(t => t.person === person);
   }
 
-  // Sort: pending first (by date asc), then done
   visible.sort((a, b) => {
     if (a.done !== b.done) return a.done ? 1 : -1;
     if (a.date && b.date) return a.date.localeCompare(b.date);
@@ -805,7 +619,6 @@ function render() {
     return;
   }
 
-  // Group: pending vs done
   const pending = visible.filter(t => !t.done);
   const done    = visible.filter(t =>  t.done);
   let html = "";
@@ -827,7 +640,6 @@ function cardHTML(t) {
   if (t.person)  badges += `<span class="badge badge-person">👤 ${t.person}</span>`;
   if (t.category) badges += `<span class="badge badge-cat">${catIcon[t.category] || ""} ${capitalize(t.category)}</span>`;
   
-  // Location badge (for todo/farm tasks)
   if (t.location) {
     const locIcons = { home: "🏠", sapling: "🚜", other: "📍" };
     const locNames = { home: "Home", sapling: "Sapling", other: "Other" };
@@ -857,10 +669,8 @@ function cardHTML(t) {
   </div>`;
 }
 
-// ── Actions ──
 function editTask(id, event) {
   if (event) event.stopPropagation();
-  // Don't open modal if clicking on checkbox, delete, or toggle button
   if (event && (event.target.classList.contains('task-check') || 
                 event.target.classList.contains('task-delete') || 
                 event.target.classList.contains('status-btn'))) {
@@ -874,16 +684,11 @@ async function toggleDone(id, event) {
   if (event) event.stopPropagation();
   const t = tasks.find(x => x.id === id);
   if (!t) return;
-  t.done = !t.done;
-  
-  showLoading(true);
-  const success = await saveTask(t);
-  if (success) {
-    await loadTasks();
-    showToast(t.done ? "✓ Marked as done" : "Reopened");
-  } else {
-    t.done = !t.done; // Revert on failure
-    showLoading(false);
+  try {
+    await tasksRef.child(id).update({ done: !t.done });
+    showToast(t.done ? "Reopened" : "✓ Marked as done");
+  } catch (err) {
+    console.error("Toggle error:", err);
     showToast("⚠️ Update failed");
   }
 }
@@ -894,15 +699,54 @@ async function deleteTask(id, event) {
   if (!t) return;
   if (!confirm(`Delete "${t.name}"?\n\nThis cannot be undone.`)) return;
   
-  const success = await deleteTaskRemote(id);
-  if (success) {
+  try {
+    await tasksRef.child(id).remove();
     showToast("Removed");
-  } else {
+  } catch (err) {
+    console.error("Delete error:", err);
     showToast("⚠️ Delete failed");
   }
 }
 
-// ── Toast ──
+document.getElementById("clearBtn").addEventListener("click", async () => {
+  if (!confirm("Delete all completed tasks?\n\nThis cannot be undone.")) return;
+  
+  const completed = tasks.filter(t => t.done);
+  try {
+    const updates = {};
+    completed.forEach(t => { updates[t.id] = null; });
+    await tasksRef.update(updates);
+    showToast(`✓ Cleared ${completed.length} tasks`);
+  } catch (err) {
+    console.error("Clear error:", err);
+    showToast("⚠️ Clear failed");
+  }
+});
+
+document.getElementById("archiveBtn").addEventListener("click", async () => {
+  const cutoff = Date.now() - (30 * 24 * 60 * 60 * 1000);
+  const toArchive = tasks.filter(t => t.done && t.createdAt < cutoff);
+  
+  if (toArchive.length === 0) {
+    showToast("No old tasks to archive");
+    return;
+  }
+  
+  try {
+    const archiveRef = db.ref('archive');
+    const updates = {};
+    toArchive.forEach(t => { 
+      updates[`archive/${t.id}`] = t;
+      updates[`tasks/${t.id}`] = null;
+    });
+    await db.ref().update(updates);
+    showToast(`✓ Archived ${toArchive.length} tasks`);
+  } catch (err) {
+    console.error("Archive error:", err);
+    showToast("⚠️ Archive failed");
+  }
+});
+
 function showToast(msg) {
   const el = document.getElementById("toast");
   el.textContent = msg;
@@ -910,7 +754,6 @@ function showToast(msg) {
   setTimeout(() => el.classList.remove("show"), 1800);
 }
 
-// ── Helpers ──
 function formatDate(iso) {
   const d = new Date(iso + "T00:00:00");
   const opts = { month: "short", day: "numeric" };
@@ -918,12 +761,6 @@ function formatDate(iso) {
 }
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 function escapeHtml(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
-
-// ── Init ──
-loadTasks();
-
-// Auto-refresh every 30 seconds to catch changes from other users
-setInterval(loadTasks, 30000);
 </script>
 </body>
 </html>
