@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>அகநிரல்</title>
+<title>அகநிரல் v1.1.0</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap');
 
@@ -352,6 +352,7 @@
       <button class="header-btn" id="archiveBtn">📦 Archive</button>
       <button class="header-btn" id="clearBtn">🗑️ Clear Done</button>
       <div class="sync-status synced" id="syncStatus">● live</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 500;">v1.1.0</div>
     </div>
   </div>
   <div class="tabs" id="tabs">
@@ -492,7 +493,7 @@ const tasksRef = db.ref('tasks');
 const FAMILY_MEMBERS = ["Velu", "Selvi", "Devika", "Krisshi"];
 
 let tasks  = [];
-let filter = "all";
+let activeFilters = new Set(["all"]); // Track multiple active filters, start with "all"
 let editId = null;
 
 const taskList    = document.getElementById("taskList");
@@ -616,9 +617,34 @@ tasksRef.on('value', (snapshot) => {
 document.getElementById("tabs").addEventListener("click", e => {
   const tab = e.target.closest(".tab");
   if (!tab) return;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  tab.classList.add("active");
-  filter = tab.dataset.filter;
+  
+  const filterValue = tab.dataset.filter;
+  
+  // "All" clears all other filters
+  if (filterValue === "all") {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    activeFilters.clear();
+    activeFilters.add("all");
+  } else {
+    // Toggle this filter on/off
+    if (activeFilters.has(filterValue)) {
+      activeFilters.delete(filterValue);
+      tab.classList.remove("active");
+    } else {
+      activeFilters.delete("all"); // Remove "all" when selecting specific filters
+      activeFilters.add(filterValue);
+      tab.classList.add("active");
+      document.querySelector('.tab[data-filter="all"]').classList.remove("active");
+    }
+    
+    // If no filters active, default to "all"
+    if (activeFilters.size === 0) {
+      activeFilters.add("all");
+      document.querySelector('.tab[data-filter="all"]').classList.add("active");
+    }
+  }
+  
   render();
 });
 
@@ -627,14 +653,37 @@ function render() {
   storesList.innerHTML = stores.map(s => `<option value="${s}">`).join("");
 
   let visible = tasks;
-  if (filter === "pending")  visible = tasks.filter(t => !t.done);
-  if (filter === "done")     visible = tasks.filter(t => t.done);
-  if (filter === "shopping") visible = tasks.filter(t => t.category === "shopping" && !t.done);
-  if (filter === "farm")     visible = tasks.filter(t => t.category === "farm" && !t.done);
-  if (filter === "todo")     visible = tasks.filter(t => t.category === "todo" && !t.done);
-  if (filter.startsWith("person:")) {
-    const person = filter.split(":")[1];
-    visible = tasks.filter(t => t.person === person);
+  
+  // Apply multiple filters with AND logic
+  if (!activeFilters.has("all")) {
+    visible = tasks.filter(task => {
+      let matches = true;
+      
+      // Check person filters
+      const personFilters = [...activeFilters].filter(f => f.startsWith("person:"));
+      if (personFilters.length > 0) {
+        matches = matches && personFilters.some(f => {
+          const person = f.split(":")[1];
+          return task.person === person;
+        });
+      }
+      
+      // Check category filters
+      const categoryFilters = [...activeFilters].filter(f => ["shopping", "farm", "todo"].includes(f));
+      if (categoryFilters.length > 0) {
+        matches = matches && categoryFilters.includes(task.category);
+      }
+      
+      // Check status filters
+      if (activeFilters.has("pending")) {
+        matches = matches && !task.done;
+      }
+      if (activeFilters.has("done")) {
+        matches = matches && task.done;
+      }
+      
+      return matches;
+    });
   }
 
   visible.sort((a, b) => {
